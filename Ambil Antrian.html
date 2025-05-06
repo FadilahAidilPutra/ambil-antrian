@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <title>Ambil Nomor Antrian</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(to right, #e0f7fa, #fff);
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    .card {
+      background-color: white;
+      padding: 40px;
+      border-radius: 15px;
+      box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+      text-align: center;
+      max-width: 400px;
+      width: 90%;
+    }
+    h2 {
+      color: #2e7d32;
+      margin-bottom: 20px;
+    }
+    p {
+      margin-bottom: 30px;
+      color: #555;
+    }
+    .button {
+      background-color: #4CAF50;
+      color: white;
+      padding: 15px 32px;
+      font-size: 18px;
+      border: none;
+      cursor: pointer;
+      border-radius: 8px;
+      transition: background-color 0.3s ease;
+    }
+    .button:hover {
+      background-color: #388e3c;
+    }
+    .nomor-antrian {
+      font-size: 24px;
+      font-weight: bold;
+      color: #2e7d32;
+      margin-top: 20px;
+    }
+    .logo {
+      max-width: 180px;
+      margin: 0 auto 20px;
+      display: block;
+    }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <img src="PresiousMe.JPG" alt="Logo Klinik PreciousMe" class="logo" />
+    <h2>Selamat Datang di Klinik PreciousMe</h2>
+    <p>Silakan klik tombol di bawah untuk ambil nomor antrian Anda</p>
+    <form id="antrianForm">
+      <button type="submit" class="button">Ambil Nomor Antrian</button>
+    </form>
+    <p class="nomor-antrian" id="nomorAntrian"></p>
+  </div>
+
+  <script>
+    document.getElementById('antrianForm').addEventListener('submit', function(event) {
+      event.preventDefault();
+
+      fetch('ambil_antrian.php')
+        .then(res => res.json())
+        .then(data => {
+          if (data.nomor_antrian) {
+            document.getElementById('nomorAntrian').innerText = `Nomor Antrian Anda: ${data.nomor_antrian}`;
+          } else {
+            document.getElementById('nomorAntrian').innerText = 'Gagal mengambil nomor antrian.';
+          }
+        })
+        .catch(error => {
+          console.error('Error:', error);
+          document.getElementById('nomorAntrian').innerText = 'Terjadi kesalahan. Coba lagi.';
+        });
+    });
+  </script>
+</body>
+</html>
